@@ -11,6 +11,7 @@ using namespace std;
 void modeExpression();
 void modeTwoNumbers();
 int getNumber();
+bool checkIfContains(string main, string contains);
 
 int main(){
 	cout << "Welcome to console calculator" << endl;
@@ -18,7 +19,7 @@ int main(){
 	string modeInput;
 	short int modeNumber;
 	bool complete = false;
-
+	//loop until user enters correct mode number
 	while(!complete){
 			cin >> modeInput;
 			try{
@@ -44,10 +45,78 @@ int main(){
 }
 
 void modeExpression(){
-	cout << "Enter expression:" << endl;
 	string input;
-	cin >> input;
+	string rightSide;
+	string leftSide;
+
+	int number1;
+	int number2;
+	int result;
+	//loop until user enter a right expression
+	while(true){
+		cout << "Enter expression:" << endl;
+		cin >> input;
+		if(checkIfContains(input, "+")){
+			//separate numbers from expression
+			rightSide = input.substr(0, input.find("+"));
+			leftSide = input.substr(input.find("+")+1,input.length());
+			//parse numbers to int type
+			try{
+				number1 = stoi(rightSide);
+				number2 = stoi(leftSide);
+				result = number1 + number2;
+				break;
+			}catch(const invalid_argument & e){
+				cout << "Invalid expression, available operations: +,-,*,/" << endl;
+			}
+
+		}else if(checkIfContains(input, "-")){
+			//separate numbers from expression
+			rightSide = input.substr(0, input.find("-"));
+			leftSide = input.substr(input.find("-")+1,input.length());
+			//parse numbers to int type
+			try{
+				number1 = stoi(rightSide);
+				number2 = stoi(leftSide);
+				result = number1 - number2;
+				break;
+			}catch(const invalid_argument & e){
+				cout << "Invalid expression, available operations: +,-,*,/" << endl;
+			}
+
+		}else if(checkIfContains(input, "*")){
+			//separate numbers from expression
+			rightSide = input.substr(0, input.find("*"));
+			leftSide = input.substr(input.find("*")+1,input.length());
+			//parse numbers to int type
+			try{
+				number1 = stoi(rightSide);
+				number2 = stoi(leftSide);
+				result = number1 * number2;
+				break;
+			}catch(const invalid_argument & e){
+				cout << "Invalid expression, available operations: +,-,*,/" << endl;
+			}
+		}else if(checkIfContains(input, "/")){
+			//separate numbers from expression
+			rightSide = input.substr(0, input.find("/"));
+			leftSide = input.substr(input.find("/")+1,input.length());
+			//parse numbers to int type
+			try{
+				number1 = stoi(rightSide);
+				number2 = stoi(leftSide);
+				result = number1 / number2;
+				break;
+			}catch(const invalid_argument & e){
+				cout << "Invalid expression, available operations: +,-,*,/" << endl;
+			}
+		}else{
+			cout << "Invalid expression, available operations: +,-,*,/" << endl;
+		}
+	}
+	cout << "=" << result << endl;
 }
+
 
 void modeTwoNumbers(){
 	int number1;
@@ -66,6 +135,7 @@ void modeTwoNumbers(){
 	cout << number1 << " / " << number2 << " = " << divide << endl;
 }
 
+//get cin string and parse it to number
 int getNumber(){
 	bool complete = false;
 	int result;
@@ -82,6 +152,10 @@ int getNumber(){
 	return result;
 }
 
+//check if main string contain contains string
+bool checkIfContains(string main, string contains){
+	return main.find(contains) != string::npos;
+}
 
 
 
